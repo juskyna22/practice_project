@@ -1,0 +1,59 @@
+Task 4: Package the application
+In this task, you have to package the final application you created in tasks 2 and 3.
+
+Let's keep the name of the package as SentimentAnalysis. The steps involved in packaging are:
+
+Create a folder in the working directory, with the name as the package name.
+
+Click here for hint
+
+You may use a terminal command or the Cloud IDE console to create the required folder
+
+Click here for solution
+
+mkdir SentimentAnalysis
+
+Put (or move) the application code, also called module, in the package folder.
+
+Click here for hint
+
+You may use a terminal command or the Cloud IDE console to move the `sentiment_analysis.py` file to the `SentimentAnalysis` folder
+
+Click here for solution
+
+mv ./sentiment_analysis.py ./SentimentAnalysis
+
+Create the __init__.py file, referencing the module.
+
+Click here for hint
+
+Import the module/function from the current folder in the init file
+
+Click here for solution
+
+from . import sentiment_analysis
+
+The final folder structure should look as shown in the image below.
+
+
+SentimentAnalysis is now a valid package and can be imported into any file in this project.
+
+To test this, run a python shell in the terminal and try importing the sentiment_analyzer function from the package.
+
+Click here for the hint
+
+from package_name.module_name import function_name
+
+Click here for the solution
+
+from SentimentAnalysis.sentiment_analysis import sentiment_analyzer
+
+No error message received after import statement would indicate that the package is now ready for usage. Test the function by running the following statement in the shell.
+
+
+1    sentiment_analyzer("This is fun.")
+
+The output received would look as shown below.
+
+
+To exit the python shell, type exit() or press Ctrl+Z.
