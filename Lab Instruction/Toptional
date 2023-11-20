@@ -1,0 +1,8 @@
+(Optional) Additional Exercises
+Interested learners can the try the following exercises on your own, for enhanced understanding of the concepts learnt through this project. No solution is being provided for these exercises. However, feel free to discuss and share your solutions with your peers in the course discussion forums.
+
+Run static code analysis on sentiment_analysis.py. Try to achieve a 10/10 score. Hint: Docstrings
+
+Test the capacity of your application in handling sentences of languages other than English, for e.g. French, German, etc. See if the application responds with an invalid text error.
+
+Currently, if the application is run WITHOUT supplying an input, i.e. leaving the text blank, the model still throws the same error of invalid text. Try including a special case, where a blank input receives a different error message.
