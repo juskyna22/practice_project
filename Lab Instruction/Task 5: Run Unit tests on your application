@@ -1,0 +1,53 @@
+Task 5: Run Unit tests on your application
+
+Since now we have a functional aplication, it is required that we run unit tests on some test cases to check the validity of its outputs.
+
+For running unit tests, we need to create a new file that calls the required application function from the package and tests its for a known text and output pair.
+
+For this, complete the following steps.
+
+1. Create a new file in practice_project folder, called test_sentiment_analysis.py.
+
+2. In this file, import the sentiment_analyzer function from the SentimentAnalysis package. Also import the unittest library.
+
+Click here for the solution
+
+1    from SentimentAnalysis.sentiment_analysis import sentiment_analyzer
+2    import unittest
+
+Create the unit test class. Let's call it TestSentimentAnalyzer. Define test_sentiment_analyzer as the function to run the unit tests.
+
+Click here for the solution
+
+1    class TestSentimentAnalyzer(unittest.TestCase):
+2        def test_sentiment_analyzer(self):
+
+Define 3 unit tests in the said function and check for the validity of the following statement - label pairs.
+“I love working with Python”: “SENT_POSITIVE”
+“I hate working with Pyhton”: “SENT_NEGATIVE”
+“I am neutral on Python”: “SENT_NEUTRAL”
+
+Click here for hint
+
+Use `assertEqual` function to compare the `label` of the output with the label expected.
+
+Click here for solution
+
+1    class TestSentimentAnalyzer(unittest.TestCase):
+2        def test_sentiment_analyzer(self):
+3           result_1 = sentiment_analyzer('I love working with Python')
+4            self.assertEqual(result_1['label'], 'SENT_POSITIVE')
+5            result_2 = sentiment_analyzer('I hate working with Python')
+6            self.assertEqual(result_2['label'], 'SENT_NEGATIVE')
+7            result_3 = sentiment_analyzer('I am neutral on Python')
+8            self.assertEqual(result_3['label'], 'SENT_NEUTRAL')
+
+Call the unit tests.
+
+Click here for solution
+
+1    unittest.main()
+
+
+Now that the file is ready, execute the file to perform unit tests. Upon successful execution, the output of this file should be as shown in the image below.
+
