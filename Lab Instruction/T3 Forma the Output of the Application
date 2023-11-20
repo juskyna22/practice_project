@@ -1,0 +1,58 @@
+Task 3: Format the output of the application
+
+The output of the application created is in the form of a dictionary, but has been formatted as a text. To access relevant pieces of information from this output, we need to first convert this text into a dictionary. S
+ince dictionaries are the default formatting system for JSON files, we make use of the in-built Python library json.
+
+Let's see how this works.
+
+First, in a Python shell, import the json library.
+
+
+1 import json
+
+Next, run the sentiment_analyzer function for the text “I love this new technology”, just like in Task 2, and store the output in a variable called response.
+
+
+1  from sentiment_analysis import sentiment_analyzer
+2  response = sentiment_analyzer("I love this new technology")
+
+
+Now, pass the response variable as an argument to the json.loads function and save the output in formatted_response. Print formatted_response to see the difference in the formatting.
+
+
+1  formatted_response = json.loads(response)
+2  print(formatted_response)
+
+The expected output of the above mentioned steps is shown in the image below.
+
+
+Note that the absence of single quotes on either side on the response indicates that this is no longer a text, but is a dictionary instead. To access the correct information from this dictionary, we need to access the keys appropriately. Since this is a nested dictionary structure, i.e. a dictionary of dictionaries, the following statements need to be used to get the label and the score outputs from this response.
+
+
+
+1  label = formatted_response['documentSentiment']['label']
+2  score = formatted_response['documentSentiment']['score']
+
+Check the contents of label and score to verify the output.
+
+
+Now, for Task 3, incorporate the above mentioned technique and make changes to the sentiment_analysis.py file. The expected output from calling the seniment_analyzer function should now be a dictionary with 2 keys, label and score, each having the appropriate value extracted from the response of the Watson NLP function. Verify your changes by testing the modified function in a python shell.
+
+The solution
+
+import requests
+import json
+def sentiment_analyzer(text_to_analyse):
+   url = 'https://sn-watson-sentiment-bert.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/SentimentPredict'
+   myobj = { "raw_document": { "text": text_to_analyse } }
+   header = {"grpc-metadata-mm-model-id": "sentiment_aggregated-bert-workflow_lang_multi_stock"}
+   response = requests.post(url, json = myobj, headers=header)
+   formatted_response = json.loads(response.text)
+   label = formatted_response['documentSentiment']['label']
+   score = formatted_response['documentSentiment']['score']
+   return {'label': label, 'score': score}
+   
+At completion, the expected output of the function is shown in the image below.
+
+
+To exit the python shell, type exit() or press Ctrl+Z.
