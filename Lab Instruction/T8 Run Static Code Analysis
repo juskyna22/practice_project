@@ -1,0 +1,22 @@
+Task 8: Run static code analysis
+
+Finally, in Task 8, we check the quality of your coding skills as per the PEP8 guidelines by running static code analysis.
+
+Normally, this is done at the time of packaging and unit testing the application. However, we have kept this step at the of this project since the codes are updated in all tasks before this. Once your files for this project are now ready, let us test them for adherence to the PEP8 guidelines.
+
+The first step in this process is to install the PyLint library using the terminal.
+
+Click here for the solution
+
+python3.11 -m pip install pylint
+
+Next, use pylint to run static code analyse server.py.
+
+Click here for the solution
+
+pylint server.py
+
+If all aspects of PEP8 guide have been incorporated in your code, then the score generated should be 10/10. In case it isn't follow the instructions given by the modify to correct the code appropriately.
+
+
+This concludes the practice project.
