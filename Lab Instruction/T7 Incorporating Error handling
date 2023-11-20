@@ -1,0 +1,80 @@
+Task 7: Incorporate Error handling
+To incorporate error handling, we need to identify the different forms of error codes that may be received in response to the GET query initiated by the sent_analyzer function in server.py.
+
+This is already a part of the Watson NLP Library functions and can be observed on the terminal console where the code is running.
+
+Consider the image shown below.
+
+
+The codes indicate that the initial GET request was successful (200), the request was then successfully transferred to the Watson Library (304) and then the GET request to generate the response was also conducted successfully.
+
+In the case of invalid entries, the system responds with 500 error code, indicating that there is something wrong at the server end.
+Invalid entry could be anything that the model is not able to interpret. However, in the situation of this error, this application output doesn't get updated.
+
+
+Note that the output on the interface is the same as before, the text being analyzed is a random text and the Watson AI libraries are throwing a 500 error confirming that the model has not been able to process the request.
+
+To fix this bug in our application, we need to study the response received from the Watson AI library function, when the server generates 500 error. To test this, we need to retrace the steps taken in Task 2, and test the Watson AI library with an invalid string input.
+
+Open a python shell in the terminal and run the following commands to check the required output.
+
+
+1    import requests
+2    url = "https://sn-watson-sentiment-bert.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/SentimentPredict"
+3    headers = {"grpc-metadata-mm-model-id": "sentiment_aggregated-bert-workflow_lang_multi_stock"}
+4    myobj = { "raw_document": { "text": "as987da-6s2d aweadsa" } }
+5    response = requests.post(url, json = myobj, headers=headers)
+6    print(response.status_code)
+7    myobj = { "raw_document": { "text": "Testing this application for error handling" } }
+8    response = requests.post(url, json = myobj, headers=headers)
+9    print(response.status_code)
+
+
+The console response looks as shown in the image below. The red boxes indicate the invalid text and its status code received, and the yellow boxes indicate the valid text and its status code received.
+
+
+This enables you to modify the application in such a fashion, that we can send different outputs for different status codes.
+
+In the first part of this task, you have to modify the sentiment_analyzer() function to return the both label and score as None in case of invalid text entry.
+
+Click here for hint
+
+Make an if-else conditional statement in the sentiment_analyzer function to add the necessary functionality.
+
+Click here for the solution
+
+import requests
+import json
+def sentiment_analyzer(text_to_analyse):
+    url = 'https://sn-watson-sentiment-bert.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/SentimentPredict'
+    myobj = { "raw_document": { "text": text_to_analyse } }
+    header = {"grpc-metadata-mm-model-id": "sentiment_aggregated-bert-workflow_lang_multi_stock"}
+    response = requests.post(url, json = myobj, headers=header)
+    formatted_response = json.loads(response.text)
+    if response.status_code == 200:
+        label = formatted_response['documentSentiment']['label']
+        score = formatted_response['documentSentiment']['score']
+    elif response.status_code == 500:
+        label = None
+        score = None
+    return {'label': label, 'score': score}
+
+Now, in server.py, the response to be sent to the console should also be different for the valid and invalid input types.
+For invalid input, let the console print Invalid input ! Try again.
+
+Click here for hint
+Make an if-else conditional statement in sent_analyzer function of server.py to check whether "label" is None or not.
+
+Click here for the solution
+
+def sent_analyzer():
+    text_to_analyze = request.args.get('textToAnalyze')
+    response = sentiment_analyzer(text_to_analyze)
+    label = response['label']
+    score = response['score']
+    if label is None:
+        return "Invalid input ! Try again."
+    else:
+        return "The given text has been identified as {} with a score of {}.".format(label.split('_')[1], score)
+        
+Now, your application is capable of responding appropriately to any form of inputs.
